@@ -70,7 +70,7 @@ struct RootView: View {
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         if vm.items.isNotEmpty {
-                            Button("Empty", action: emptyList)
+                            Button("Clear", action: emptyList)
                                 .horizontallyCentred()
                         }
                     }
@@ -79,12 +79,12 @@ struct RootView: View {
                             Button {
                                 showShareSheet = true
                             } label: {
-                                Label("Share \(Constants.name)", systemImage: "square.and.arrow.up")
+                                Label("Share with a Friend", systemImage: "square.and.arrow.up")
                             }
                             Button {
                                 Store.requestRating()
                             } label: {
-                                Label("Rate \(Constants.name)", systemImage: "star")
+                                Label("Rate the App", systemImage: "star")
                             }
                             Button {
                                 Store.writeReview()

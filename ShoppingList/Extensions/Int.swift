@@ -9,6 +9,6 @@ import Foundation
 
 extension Int {
     func formatted(singular: String) -> String {
-        "\(self) \(singular)\(self == 1 ? "" : "s")"
+        "\(self == 0 ? "No" : String(self)) \(singular)\(self == 1 ? "" : "s")"
     }
 }
