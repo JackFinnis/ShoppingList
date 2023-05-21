@@ -9,6 +9,10 @@ import Foundation
 
 @MainActor
 class ViewModel: ObservableObject {
+    // MARK: - Properties
+    @Published var newItem = ""
+    @Published var recentlyRemovedItems = [String]()
+    
     @Storage("items") var items = [String]() { didSet {
         objectWillChange.send()
     }}
@@ -19,9 +23,7 @@ class ViewModel: ObservableObject {
         regulars.filter { !items.contains($0) }.sorted()
     }
     
-    @Published var newItem = ""
-    @Published var recentlyRemovedItems = [String]()
-    
+    // MARK: - Methods
     func addNewItem() -> Bool {
         defer {
             newItem = ""
