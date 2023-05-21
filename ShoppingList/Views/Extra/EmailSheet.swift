@@ -8,7 +8,7 @@
 import SwiftUI
 import MessageUI
 
-struct EmailView: UIViewControllerRepresentable {
+struct EmailSheet: UIViewControllerRepresentable {
     let recipient: String
     let subject: String
     let onDismiss: (MFMailComposeResult) -> Void
@@ -28,9 +28,9 @@ struct EmailView: UIViewControllerRepresentable {
     func updateUIViewController(_ vc: MFMailComposeViewController, context: Context) {}
     
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        var parent: EmailView
+        var parent: EmailSheet
 
-        init(_ parent: EmailView) {
+        init(_ parent: EmailSheet) {
             self.parent = parent
         }
         
@@ -58,7 +58,7 @@ struct EmailModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $isPresented) {
-                EmailView(recipient: recipient, subject: subject) { result in
+                EmailSheet(recipient: recipient, subject: subject) { result in
                     switch result {
                     case .sent:
                         showEmailSent = true

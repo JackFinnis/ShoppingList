@@ -8,14 +8,12 @@
 import SwiftUI
 import MessageUI
 
-struct RootView: View {
+struct ShoppingList: View {
     @StateObject var vm = ViewModel()
     @FocusState var focused: Bool
     @State var showShareSheet = false
     @State var showEmailSheet = false
     @State var showUndoAlert = false
-    @State var newItem = ""
-    @State var recentlyRemovedItems = [String]()
     
     var body: some View {
         NavigationView {
@@ -23,42 +21,22 @@ struct RootView: View {
                 List {
                     Section {
                         ForEach(vm.items, id: \.self) { item in
-                            HStack(spacing: 15) {
-                                Button {
-                                    removeItem(item)
-                                } label: {
-                                    let removed = recentlyRemovedItems.contains(item)
-                                    Image(systemName: removed ? "checkmark.circle.fill" : "circle")
-                                        .foregroundColor(removed ? .accentColor : Color(.placeholderText))
-                                        .font(.title2)
-                                }
-                                Text(item)
-                                Spacer()
-                                RegularToggle(item: item)
-                            }
+                            ItemRow(item: item, suggested: false)
                         }
                         
-                        TextField("Add Item", text: $newItem)
+                        TextField("Add Item", text: $vm.newItem)
                             .id(0)
                             .submitLabel(.done)
                             .focused($focused)
-                            .onSubmit(addNewItem)
+                            .onSubmit {
+                                focused = vm.addNewItem()
+                            }
                     }
                     
                     if vm.suggestions.isNotEmpty {
                         Section("Favourites") {
                             ForEach(vm.suggestions, id: \.self) { item in
-                                HStack(spacing: 15) {
-                                    Button {
-                                        addItem(item)
-                                    } label: {
-                                        Image(systemName: "plus.circle")
-                                            .font(.title2)
-                                    }
-                                    Text(item)
-                                    Spacer()
-                                    RegularToggle(item: item)
-                                }
+                                ItemRow(item: item, suggested: true)
                             }
                         }
                         .headerProminence(.increased)
@@ -70,8 +48,10 @@ struct RootView: View {
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
                         if vm.items.isNotEmpty {
-                            Button("Clear", action: emptyList)
-                                .horizontallyCentred()
+                            Button("Clear") {
+                                vm.emptyList()
+                            }
+                            .horizontallyCentred()
                         }
                     }
                     ToolbarItem(placement: .principal) {
@@ -115,8 +95,10 @@ struct RootView: View {
                     }
                     ToolbarItem(placement: .bottomBar) {
                         HStack {
-                            if recentlyRemovedItems.isNotEmpty {
-                                Button(action: undoRemove) {
+                            if vm.recentlyRemovedItems.isNotEmpty {
+                                Button {
+                                    vm.undoRemove()
+                                } label: {
                                     Image(systemName: "arrow.counterclockwise")
                                 }
                             }
@@ -143,58 +125,22 @@ struct RootView: View {
         .shareSheet(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
         .onShake {
-            guard recentlyRemovedItems.isNotEmpty else { return }
+            guard vm.recentlyRemovedItems.isNotEmpty else { return }
             Haptics.success()
             showUndoAlert = true
         }
         .alert("Undo Edit", isPresented: $showUndoAlert) {
             Button("Cancel", role: .cancel) {}
-            Button("Undo", action: undoRemove)
+            Button("Undo") {
+                vm.undoRemove()
+            }
         }
         .environmentObject(vm)
     }
-    
-    func addNewItem() {
-        defer {
-            newItem = ""
-        }
-        let trimmed = newItem.trimmed
-        guard trimmed.isNotEmpty else { return }
-        if !vm.items.contains(trimmed) {
-            addItem(trimmed)
-        }
-        focused = true
-    }
-    
-    func addItem(_ item: String) {
-        vm.items.append(item)
-        recentlyRemovedItems.removeAll(item)
-    }
-    
-    func removeItem(_ item: String) {
-        guard !recentlyRemovedItems.contains(item) else { return }
-        recentlyRemovedItems.append(item)
-        Haptics.tap()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            vm.items.removeAll(item)
-        }
-    }
-    
-    func undoRemove() {
-        guard let item = recentlyRemovedItems.popLast() else { return }
-        vm.items.append(item)
-        Haptics.tap()
-    }
-    
-    func emptyList() {
-        recentlyRemovedItems.append(contentsOf: vm.items)
-        vm.items.removeAll()
-        Haptics.success()
-    }
 }
 
-struct RootView_Previews: PreviewProvider {
+struct ShoppingList_Previews: PreviewProvider {
     static var previews: some View {
-        RootView()
+        ShoppingList()
     }
 }
