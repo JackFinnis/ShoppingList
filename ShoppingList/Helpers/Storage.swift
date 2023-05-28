@@ -11,10 +11,12 @@ import Foundation
 struct Storage<T> {
     let key: String
     let defaultValue: T
+    let iCloudSync: Bool
     
-    init(wrappedValue defaultValue: T, _ key: String) {
+    init(wrappedValue defaultValue: T, _ key: String, iCloudSync: Bool = false) {
         self.key = key
         self.defaultValue = defaultValue
+        self.iCloudSync = iCloudSync
     }
     
     let defaults = UserDefaults.standard
@@ -24,6 +26,9 @@ struct Storage<T> {
         }
         set {
             defaults.set(newValue, forKey: key)
+            if iCloudSync {
+                NSUbiquitousKeyValueStore.default.set(newValue, forKey: key)
+            }
         }
     }
 }

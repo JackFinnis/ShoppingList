@@ -13,14 +13,38 @@ class ViewModel: ObservableObject {
     @Published var newItem = ""
     @Published var recentlyRemovedItems = [String]()
     
-    @Storage("items") var items = [String]() { didSet {
+    @Storage("items", iCloudSync: true) var items = [String]() { didSet {
         objectWillChange.send()
     }}
-    @Storage("regulars") var regulars = [String]() { didSet {
+    @Storage("regulars", iCloudSync: true) var regulars = [String]() { didSet {
         objectWillChange.send()
     }}
     var suggestions: [String] {
         regulars.filter { !items.contains($0) }.sorted()
+    }
+    
+    // MARK: - Initialiser
+    init() {
+        setupStorage()
+    }
+    
+    func setupStorage() {
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedNewKeyValue), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
+        guard NSUbiquitousKeyValueStore.default.synchronize() else {
+            fatalError()
+        }
+    }
+    
+    @objc
+    func receivedNewKeyValue(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let items = NSUbiquitousKeyValueStore.default.object(forKey: "items") as? [String] {
+                self.items = items
+            }
+            if let regulars = NSUbiquitousKeyValueStore.default.object(forKey: "regulars") as? [String] {
+                self.regulars = regulars
+            }
+        }
     }
     
     // MARK: - Methods

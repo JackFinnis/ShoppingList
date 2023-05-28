@@ -16,93 +16,104 @@ struct ShoppingList: View {
     @State var showUndoAlert = false
     
     var body: some View {
-        NavigationView {
-            ScrollViewReader { list in
-                List {
-                    Section {
-                        ForEach(vm.items, id: \.self) { item in
-                            ItemRow(item: item, suggested: false)
+        ZStack {
+            Color(.systemGroupedBackground).ignoresSafeArea()
+            NavigationView {
+                ScrollViewReader { list in
+                    List {
+                        Section {
+                            ForEach(vm.items, id: \.self) { item in
+                                ItemRow(item: item, suggested: false)
+                            }
+                            
+                            TextField("Add Item", text: $vm.newItem)
+                                .id(0)
+                                .submitLabel(.done)
+                                .focused($focused)
+                                .onSubmit {
+                                    focused = vm.addNewItem()
+                                }
                         }
                         
-                        TextField("Add Item", text: $vm.newItem)
-                            .id(0)
-                            .submitLabel(.done)
-                            .focused($focused)
-                            .onSubmit {
-                                focused = vm.addNewItem()
-                            }
-                    }
-                    
-                    if vm.suggestions.isNotEmpty {
-                        Section("Favourites") {
-                            ForEach(vm.suggestions, id: \.self) { item in
-                                ItemRow(item: item, suggested: true)
-                            }
-                        }
-                        .headerProminence(.increased)
-                    }
-                }
-                .animation(.default, value: vm.items)
-                .animation(.default, value: vm.regulars)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        if vm.items.isNotEmpty {
-                            Button("Clear") {
-                                vm.emptyList()
-                            }
-                            .horizontallyCentred()
-                        }
-                    }
-                    ToolbarItem(placement: .principal) {
-                        Menu {
-                            Button {
-                                showShareSheet = true
-                            } label: {
-                                Label("Share with a Friend", systemImage: "square.and.arrow.up")
-                            }
-                            Button {
-                                Store.requestRating()
-                            } label: {
-                                Label("Rate the App", systemImage: "star")
-                            }
-                            Button {
-                                Store.writeReview()
-                            } label: {
-                                Label("Write a Review", systemImage: "quote.bubble")
-                            }
-                            if MFMailComposeViewController.canSendMail() {
-                                Button {
-                                    showEmailSheet.toggle()
-                                } label: {
-                                    Label("Send us Feedback", systemImage: "envelope")
-                                }
-                            } else if let url = Emails.mailtoUrl(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
-                                Button {
-                                    UIApplication.shared.open(url)
-                                } label: {
-                                    Label("Send us Feedback", systemImage: "envelope")
+                        if vm.suggestions.isNotEmpty {
+                            Section("Favourites") {
+                                ForEach(vm.suggestions, id: \.self) { item in
+                                    ItemRow(item: item, suggested: true)
                                 }
                             }
-                        } label: {
-                            HStack {
-                                Text(Constants.name)
-                                    .font(.headline)
-                                MenuChevron()
-                            }
-                            .foregroundColor(.primary)
+                            .headerProminence(.increased)
                         }
                     }
-                    ToolbarItem(placement: .bottomBar) {
-                        HStack {
+                    .listStyle(.insetGrouped)
+                    .animation(.default, value: vm.items)
+                    .animation(.default, value: vm.regulars)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            if vm.items.isNotEmpty {
+                                Button("Clear") {
+                                    vm.emptyList()
+                                }
+                                .horizontallyCentred()
+                            }
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Menu {
+                                Button {
+                                    showShareSheet = true
+                                } label: {
+                                    Label("Share with a Friend", systemImage: "square.and.arrow.up")
+                                }
+                                Button {
+                                    Store.requestRating()
+                                } label: {
+                                    Label("Rate the App", systemImage: "star")
+                                }
+                                Button {
+                                    Store.writeReview()
+                                } label: {
+                                    Label("Write a Review", systemImage: "quote.bubble")
+                                }
+                                if MFMailComposeViewController.canSendMail() {
+                                    Button {
+                                        showEmailSheet.toggle()
+                                    } label: {
+                                        Label("Send us Feedback", systemImage: "envelope")
+                                    }
+                                } else if let url = Emails.mailtoUrl(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
+                                    Button {
+                                        UIApplication.shared.open(url)
+                                    } label: {
+                                        Label("Send us Feedback", systemImage: "envelope")
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Text(Constants.name)
+                                        .font(.headline)
+                                    MenuChevron()
+                                }
+                                .foregroundColor(.primary)
+                            }
+                            .sharePopover(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
+                        }
+                        ToolbarItem(placement: .bottomBar) {
                             if vm.recentlyRemovedItems.isNotEmpty {
                                 Button {
                                     vm.undoRemove()
                                 } label: {
                                     Image(systemName: "arrow.counterclockwise")
                                 }
+                            } else {
+                                Text("")
                             }
-                            Spacer()
+                        }
+                        ToolbarItem(placement: .status) {
+                            Text(vm.items.count.formatted(singular: "item"))
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        ToolbarItem(placement: .bottomBar) {
                             Button {
                                 withAnimation {
                                     focused = true
@@ -112,17 +123,12 @@ struct ShoppingList: View {
                                 Image(systemName: "plus")
                             }
                         }
-                        .overlay {
-                            Text(vm.items.count.formatted(singular: "item"))
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
                     }
                 }
             }
+            .frame(maxWidth: 500)
+            .navigationViewStyle(.stack)
         }
-        .navigationViewStyle(.stack)
-        .shareSheet(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
         .onShake {
             guard vm.recentlyRemovedItems.isNotEmpty else { return }
