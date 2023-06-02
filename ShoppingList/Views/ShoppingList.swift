@@ -36,9 +36,18 @@ struct ShoppingList: View {
                         }
                         
                         if vm.suggestions.isNotEmpty {
-                            Section("Favourites") {
+                            Section {
                                 ForEach(vm.suggestions, id: \.self) { item in
                                     ItemRow(item: item, suggested: true)
+                                }
+                            } header: {
+                                HStack {
+                                    Text("Favourites")
+                                    Spacer()
+                                    Button("Add All") {
+                                        vm.addAllSuggestions()
+                                    }
+                                    .font(.body)
                                 }
                             }
                             .headerProminence(.increased)
@@ -62,7 +71,7 @@ struct ShoppingList: View {
                                 Button {
                                     showShareSheet = true
                                 } label: {
-                                    Label("Share with a Friend", systemImage: "square.and.arrow.up")
+                                    Label("Share the App", systemImage: "square.and.arrow.up")
                                 }
                                 Button {
                                     Store.requestRating()
@@ -96,6 +105,13 @@ struct ShoppingList: View {
                                 .foregroundColor(.primary)
                             }
                             .sharePopover(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
+                        }
+                        ToolbarItem(placement: .primaryAction) {
+                            if vm.items.isNotEmpty {
+                                Button("Copy") {
+                                    vm.copyList()
+                                }
+                            }
                         }
                         ToolbarItem(placement: .bottomBar) {
                             if vm.recentlyRemovedItems.isNotEmpty {

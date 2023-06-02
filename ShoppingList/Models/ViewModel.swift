@@ -5,7 +5,7 @@
 //  Created by Jack Finnis on 20/05/2023.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 class ViewModel: ObservableObject {
@@ -86,6 +86,13 @@ class ViewModel: ObservableObject {
         recentlyRemovedItems.removeAll(item)
     }
     
+    func addAllSuggestions() {
+        Haptics.success()
+        suggestions.forEach { suggestion in
+            addItem(suggestion)
+        }
+    }
+    
     func removeItem(_ item: String) {
         guard !recentlyRemovedItems.contains(item) else { return }
         recentlyRemovedItems.append(item)
@@ -93,5 +100,10 @@ class ViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.items.removeAll(item)
         }
+    }
+    
+    func copyList() {
+        UIPasteboard.general.string = items.joined(separator: "\n")
+        Haptics.success()
     }
 }
