@@ -69,7 +69,7 @@ struct ShoppingList: View {
                         ToolbarItem(placement: .principal) {
                             Menu {
                                 Button {
-                                    showShareSheet = true
+                                    showShareSheet.toggle()
                                 } label: {
                                     Label("Share the App", systemImage: "square.and.arrow.up")
                                 }
@@ -115,10 +115,8 @@ struct ShoppingList: View {
                         }
                         ToolbarItem(placement: .bottomBar) {
                             if vm.recentlyRemovedItems.isNotEmpty {
-                                Button {
+                                Button("Undo") {
                                     vm.undoRemove()
-                                } label: {
-                                    Image(systemName: "arrow.counterclockwise")
                                 }
                             } else {
                                 Text("")
@@ -130,13 +128,11 @@ struct ShoppingList: View {
                                 .foregroundColor(.secondary)
                         }
                         ToolbarItem(placement: .bottomBar) {
-                            Button {
+                            Button("Add") {
                                 withAnimation {
                                     focused = true
                                     list.scrollTo(0)
                                 }
-                            } label: {
-                                Image(systemName: "plus")
                             }
                         }
                     }
@@ -149,7 +145,7 @@ struct ShoppingList: View {
         .onShake {
             guard vm.recentlyRemovedItems.isNotEmpty else { return }
             Haptics.success()
-            showUndoAlert = true
+            showUndoAlert.toggle()
         }
         .alert("Undo Edit", isPresented: $showUndoAlert) {
             Button("Cancel", role: .cancel) {}

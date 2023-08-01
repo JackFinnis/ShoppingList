@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     func horizontallyCentred() -> some View {
-        HStack {
+        HStack(spacing: 0) {
             Spacer(minLength: 0)
             self
             Spacer(minLength: 0)

@@ -8,7 +8,7 @@
 import SwiftUI
 import MessageUI
 
-struct EmailSheet: UIViewControllerRepresentable {
+struct EmailView: UIViewControllerRepresentable {
     let recipient: String
     let subject: String
     let onDismiss: (MFMailComposeResult) -> Void
@@ -28,9 +28,9 @@ struct EmailSheet: UIViewControllerRepresentable {
     func updateUIViewController(_ vc: MFMailComposeViewController, context: Context) {}
     
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
-        var parent: EmailSheet
+        var parent: EmailView
 
-        init(_ parent: EmailSheet) {
+        init(_ parent: EmailView) {
             self.parent = parent
         }
         
@@ -48,6 +48,7 @@ extension View {
 }
 
 struct EmailModifier: ViewModifier {
+    @EnvironmentObject var vm: ViewModel
     @State var showEmailSent = false
     @State var showEmailNotSent = false
     
@@ -58,7 +59,7 @@ struct EmailModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .sheet(isPresented: $isPresented) {
-                EmailSheet(recipient: recipient, subject: subject) { result in
+                EmailView(recipient: recipient, subject: subject) { result in
                     switch result {
                     case .sent:
                         showEmailSent = true
@@ -74,17 +75,21 @@ struct EmailModifier: ViewModifier {
             .alert("Email Sent", isPresented: $showEmailSent) {
                 Button("OK", role: .cancel) {}
             } message: {
-                Text("Thanks for your feedback!\nWe'll get back to you as soon as possible.")
+                Text("Thank you for your feedback!\nWe'll get back to you as soon as possible.")
             }
             .alert("Email Not Sent", isPresented: $showEmailNotSent) {
                 Button("OK", role: .cancel) {}
                 Button("Open Settings") {
-                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(url)
-                    }
+                    openSettings()
                 }
             } message: {
                 Text("Please authenticate your email account and try again.")
             }
+    }
+    
+    func openSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
     }
 }

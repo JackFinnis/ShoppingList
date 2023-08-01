@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShareSheet: UIViewControllerRepresentable {
+struct ShareView: UIViewControllerRepresentable {
     let items: [Any]
     let completion: (Bool) -> Void
     
@@ -23,7 +23,7 @@ struct ShareSheet: UIViewControllerRepresentable {
 }
 
 extension View {
-    func sharePopover(items: [Any], showsSharedAlert: Bool = false, isPresented: Binding<Bool>) -> some View {
+    func sharePopover(items: [Any], showsSharedAlert: Bool, isPresented: Binding<Bool>) -> some View {
         modifier(ShareModifier(items: items, showsSharedAlert: showsSharedAlert, isPresented: isPresented))
     }
 }
@@ -38,7 +38,7 @@ struct ShareModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .popover(isPresented: $isPresented) {
-                let view = ShareSheet(items: items) { shared in
+                let view = ShareView(items: items) { shared in
                     showSharedAlert = showsSharedAlert && shared
                 }
                 .ignoresSafeArea()
