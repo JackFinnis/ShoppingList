@@ -142,17 +142,6 @@ struct ShoppingList: View {
             .navigationViewStyle(.stack)
         }
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
-        .onShake {
-            guard vm.recentlyRemovedItems.isNotEmpty else { return }
-            Haptics.success()
-            showUndoAlert.toggle()
-        }
-        .alert("Undo Edit", isPresented: $showUndoAlert) {
-            Button("Cancel", role: .cancel) {}
-            Button("Undo") {
-                vm.undoRemove()
-            }
-        }
         .environmentObject(vm)
     }
 }
