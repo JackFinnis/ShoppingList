@@ -62,9 +62,9 @@ struct EmailModifier: ViewModifier {
                 EmailView(recipient: recipient, subject: subject) { result in
                     switch result {
                     case .sent:
-                        showEmailSent = true
+                        showEmailSent.toggle()
                     case .failed:
-                        showEmailNotSent = true
+                        showEmailNotSent.toggle()
                     default:
                         break
                     }

@@ -63,13 +63,11 @@ class ViewModel: ObservableObject {
     func undoRemove() {
         guard let item = recentlyRemovedItems.popLast() else { return }
         items.append(item)
-        Haptics.tap()
     }
     
     func emptyList() {
         recentlyRemovedItems.append(contentsOf: items)
         items.removeAll()
-        Haptics.success()
     }
     
     func toggleRegular(_ item: String) {
@@ -77,17 +75,18 @@ class ViewModel: ObservableObject {
             regulars.removeAll(item)
         } else {
             regulars.append(item)
+            Haptics.tap()
         }
-        Haptics.tap()
     }
     
     func addItem(_ item: String) {
-        items.append(item)
         recentlyRemovedItems.removeAll(item)
+        if !items.contains(item) {
+            items.append(item)
+        }
     }
     
     func addAllSuggestions() {
-        Haptics.success()
         suggestions.forEach { suggestion in
             addItem(suggestion)
         }
@@ -104,6 +103,6 @@ class ViewModel: ObservableObject {
     
     func copyList() {
         UIPasteboard.general.string = items.joined(separator: "\n")
-        Haptics.success()
+        Haptics.tap()
     }
 }

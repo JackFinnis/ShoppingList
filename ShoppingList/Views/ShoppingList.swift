@@ -16,9 +16,10 @@ struct ShoppingList: View {
     @State var showUndoAlert = false
     
     var body: some View {
-        ZStack {
-            Color(.systemGroupedBackground).ignoresSafeArea()
-            NavigationView {
+        NavigationView {
+            ZStack {
+                Color(.systemGroupedBackground)
+                    .ignoresSafeArea()
                 ScrollViewReader { list in
                     List {
                         Section {
@@ -53,18 +54,18 @@ struct ShoppingList: View {
                             .headerProminence(.increased)
                         }
                     }
+                    .frame(maxWidth: 500)
                     .listStyle(.insetGrouped)
                     .animation(.default, value: vm.items)
                     .animation(.default, value: vm.regulars)
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            if vm.items.isNotEmpty {
-                                Button("Clear") {
-                                    vm.emptyList()
-                                }
-                                .horizontallyCentred()
+                            Button("Clear") {
+                                vm.emptyList()
                             }
+                            .horizontallyCentred()
+                            .disabled(vm.items.isEmpty)
                         }
                         ToolbarItem(placement: .principal) {
                             Menu {
@@ -107,20 +108,16 @@ struct ShoppingList: View {
                             .sharePopover(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
                         }
                         ToolbarItem(placement: .primaryAction) {
-                            if vm.items.isNotEmpty {
-                                Button("Copy") {
-                                    vm.copyList()
-                                }
+                            Button("Copy") {
+                                vm.copyList()
                             }
+                            .disabled(vm.items.isEmpty)
                         }
                         ToolbarItem(placement: .bottomBar) {
-                            if vm.recentlyRemovedItems.isNotEmpty {
-                                Button("Undo") {
-                                    vm.undoRemove()
-                                }
-                            } else {
-                                Text("")
+                            Button("Undo") {
+                                vm.undoRemove()
                             }
+                            .disabled(vm.recentlyRemovedItems.isEmpty)
                         }
                         ToolbarItem(placement: .status) {
                             Text(vm.items.count.formatted(singular: "item"))
@@ -128,9 +125,9 @@ struct ShoppingList: View {
                                 .foregroundColor(.secondary)
                         }
                         ToolbarItem(placement: .bottomBar) {
-                            Button("Add") {
+                            Button("Add Item") {
                                 withAnimation {
-                                    focused = true
+                                    focused.toggle()
                                     list.scrollTo(0)
                                 }
                             }
@@ -138,9 +135,8 @@ struct ShoppingList: View {
                     }
                 }
             }
-            .frame(maxWidth: 500)
-            .navigationViewStyle(.stack)
         }
+        .navigationViewStyle(.stack)
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
         .environmentObject(vm)
     }

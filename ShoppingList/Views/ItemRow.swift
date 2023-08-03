@@ -14,7 +14,7 @@ struct ItemRow: View {
     let suggested: Bool
     
     var body: some View {
-        HStack(spacing: 15) {
+        HStack(spacing: 0) {
             if suggested {
                 Button {
                     vm.addItem(item)
@@ -33,6 +33,7 @@ struct ItemRow: View {
                 }
             }
             Text(item)
+                .padding(.leading, 15)
             Spacer()
             Button {
                 vm.toggleRegular(item)
@@ -43,5 +44,14 @@ struct ItemRow: View {
             }
             .buttonStyle(.borderless)
         }
+    }
+}
+
+struct ItemRow_Previews: PreviewProvider {
+    static var previews: some View {
+        List {
+            ItemRow(item: "Milk", suggested: true)
+        }
+        .environmentObject(ViewModel())
     }
 }

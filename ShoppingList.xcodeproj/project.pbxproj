@@ -15,7 +15,6 @@
 		0402C6FF2A197EF200238C51 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6FE2A197EF200238C51 /* Constants.swift */; };
 		0402C7012A197F0D00238C51 /* Emails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7002A197F0D00238C51 /* Emails.swift */; };
 		0402C7032A197F1900238C51 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7022A197F1900238C51 /* Haptics.swift */; };
-		0402C7052A197F2F00238C51 /* ShakeDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7042A197F2F00238C51 /* ShakeDetector.swift */; };
 		0402C7072A197F3D00238C51 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7062A197F3D00238C51 /* Store.swift */; };
 		0402C7092A197F5500238C51 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7082A197F5500238C51 /* String.swift */; };
 		0402C70B2A197F7800238C51 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C70A2A197F7800238C51 /* EmailView.swift */; };
@@ -38,7 +37,6 @@
 		0402C6FE2A197EF200238C51 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0402C7002A197F0D00238C51 /* Emails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emails.swift; sourceTree = "<group>"; };
 		0402C7022A197F1900238C51 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-		0402C7042A197F2F00238C51 /* ShakeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeDetector.swift; sourceTree = "<group>"; };
 		0402C7062A197F3D00238C51 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		0402C7082A197F5500238C51 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0402C70A2A197F7800238C51 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
@@ -49,6 +47,7 @@
 		0402C7162A198B3000238C51 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 		0402C7182A19903100238C51 /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		0402C71A2A19924F00238C51 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		0445D53F2A7C639100B22EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04E46D082A241B4100B9E8CE /* ShoppingList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoppingList.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,6 +104,7 @@
 		0402C6F02A197C9700238C51 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0445D53F2A7C639100B22EA0 /* Info.plist */,
 				04E46D082A241B4100B9E8CE /* ShoppingList.entitlements */,
 				0402C6E52A197C7900238C51 /* Assets.xcassets */,
 			);
@@ -128,7 +128,6 @@
 				0402C6FE2A197EF200238C51 /* Constants.swift */,
 				0402C7002A197F0D00238C51 /* Emails.swift */,
 				0402C7022A197F1900238C51 /* Haptics.swift */,
-				0402C7042A197F2F00238C51 /* ShakeDetector.swift */,
 				0402C6FC2A197E0300238C51 /* Storage.swift */,
 				0402C7062A197F3D00238C51 /* Store.swift */,
 			);
@@ -235,7 +234,6 @@
 				0402C6FF2A197EF200238C51 /* Constants.swift in Sources */,
 				0402C7072A197F3D00238C51 /* Store.swift in Sources */,
 				0402C6F62A197CCD00238C51 /* ShoppingList.swift in Sources */,
-				0402C7052A197F2F00238C51 /* ShakeDetector.swift in Sources */,
 				0402C7172A198B3000238C51 /* ItemRow.swift in Sources */,
 				0402C6FD2A197E0300238C51 /* Storage.swift in Sources */,
 				0402C71B2A19924F00238C51 /* Int.swift in Sources */,
@@ -373,12 +371,11 @@
 				DEVELOPMENT_TEAM = 4CQW4CFFYT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShoppingList/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Shopping;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -405,12 +402,11 @@
 				DEVELOPMENT_TEAM = 4CQW4CFFYT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShoppingList/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Shopping;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
