@@ -30,9 +30,7 @@ class ViewModel: ObservableObject {
     
     func setupStorage() {
         NotificationCenter.default.addObserver(self, selector: #selector(receivedNewKeyValue), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
-        guard NSUbiquitousKeyValueStore.default.synchronize() else {
-            fatalError()
-        }
+        NSUbiquitousKeyValueStore.default.synchronize()
     }
     
     @objc

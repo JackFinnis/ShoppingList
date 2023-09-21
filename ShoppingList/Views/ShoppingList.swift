@@ -8,6 +8,30 @@
 import SwiftUI
 import MessageUI
 
+struct ClearButton: View {
+    @Binding var text: String
+    
+    var body: some View {
+        Button {
+            text = ""
+        } label: {
+            Image(systemName: "xmark.circle.fill")
+                .foregroundColor(.gray)
+        }
+        .buttonStyle(.borderless)
+    }
+}
+
+extension View {
+    func clearable(text: Binding<String>) -> some View {
+        self
+            .padding(.trailing, 25)
+            .overlay(alignment: .trailing) {
+                ClearButton(text: text)
+            }
+    }
+}
+
 struct ShoppingList: View {
     @StateObject var vm = ViewModel()
     @FocusState var focused: Bool
@@ -29,6 +53,7 @@ struct ShoppingList: View {
                             
                             TextField("Add Item", text: $vm.newItem)
                                 .id(0)
+                                .clearable(text: $vm.newItem)
                                 .submitLabel(.done)
                                 .focused($focused)
                                 .onSubmit {
