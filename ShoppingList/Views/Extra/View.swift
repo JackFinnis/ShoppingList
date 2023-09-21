@@ -29,12 +29,14 @@ struct ClearButton: View {
     @Binding var text: String
     
     var body: some View {
-        Button {
-            text = ""
-        } label: {
-            Image(systemName: "xmark.circle.fill")
-                .foregroundColor(.gray)
+        if text.isNotEmpty {
+            Button {
+                text = ""
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(Color(.placeholderText))
+            }
+            .buttonStyle(.borderless)
         }
-        .buttonStyle(.borderless)
     }
 }

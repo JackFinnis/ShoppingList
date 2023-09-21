@@ -51,6 +51,7 @@ struct ShoppingList: View {
                                     }
                                     .font(.body)
                                 }
+                                .padding(.horizontal, 10)
                             }
                             .headerProminence(.increased)
                         }
@@ -122,7 +123,6 @@ struct ShoppingList: View {
                         }
                         ToolbarItem(placement: .status) {
                             Text(vm.items.count.formatted(singular: "item"))
-                                .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
                         ToolbarItem(placement: .bottomBar) {
