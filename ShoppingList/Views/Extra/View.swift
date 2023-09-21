@@ -15,4 +15,26 @@ extension View {
             Spacer(minLength: 0)
         }
     }
+    
+    func clearable(text: Binding<String>) -> some View {
+        self
+            .padding(.trailing, 25)
+            .overlay(alignment: .trailing) {
+                ClearButton(text: text)
+            }
+    }
+}
+
+struct ClearButton: View {
+    @Binding var text: String
+    
+    var body: some View {
+        Button {
+            text = ""
+        } label: {
+            Image(systemName: "xmark.circle.fill")
+                .foregroundColor(.gray)
+        }
+        .buttonStyle(.borderless)
+    }
 }
