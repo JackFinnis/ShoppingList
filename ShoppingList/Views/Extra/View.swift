@@ -15,28 +15,25 @@ extension View {
             Spacer(minLength: 0)
         }
     }
-    
-    func clearable(text: Binding<String>) -> some View {
-        self
-            .padding(.trailing, 25)
-            .overlay(alignment: .trailing) {
-                ClearButton(text: text)
-            }
-    }
 }
 
-struct ClearButton: View {
+struct ClearableField: View {
+    let placeholder: String
     @Binding var text: String
     
     var body: some View {
-        if text.isNotEmpty {
-            Button {
-                text = ""
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(Color(.placeholderText))
+        TextField(placeholder, text: $text)
+            .padding(.trailing, 25)
+            .overlay(alignment: .trailing) {
+                if text.isNotEmpty {
+                    Button {
+                        text = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(Color(.placeholderText))
+                    }
+                    .buttonStyle(.borderless)
+                }
             }
-            .buttonStyle(.borderless)
-        }
     }
 }

@@ -11,12 +11,11 @@ import MessageUI
 struct ShoppingList: View {
     @StateObject var vm = ViewModel()
     @FocusState var focused: Bool
-    @State var showShareSheet = false
     @State var showEmailSheet = false
     @State var showUndoAlert = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 Color(.systemGroupedBackground)
                     .ignoresSafeArea()
@@ -27,9 +26,8 @@ struct ShoppingList: View {
                                 ItemRow(item: item, suggested: false)
                             }
                             
-                            TextField("Add Item", text: $vm.newItem)
+                            ClearableField(placeholder: "Add Item", text: $vm.newItem)
                                 .id(0)
-                                .clearable(text: $vm.newItem)
                                 .submitLabel(.done)
                                 .focused($focused)
                                 .onSubmit {
@@ -51,7 +49,6 @@ struct ShoppingList: View {
                                     }
                                     .font(.body)
                                 }
-                                .padding(.horizontal, 10)
                             }
                             .headerProminence(.increased)
                         }
@@ -71,11 +68,7 @@ struct ShoppingList: View {
                         }
                         ToolbarItem(placement: .principal) {
                             Menu {
-                                Button {
-                                    showShareSheet.toggle()
-                                } label: {
-                                    Label("Share the App", systemImage: "square.and.arrow.up")
-                                }
+                                ShareLink("Share \(Constants.name)", item: Constants.appURL)
                                 Button {
                                     Store.requestRating()
                                 } label: {
@@ -92,7 +85,7 @@ struct ShoppingList: View {
                                     } label: {
                                         Label("Send us Feedback", systemImage: "envelope")
                                     }
-                                } else if let url = Emails.mailtoUrl(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
+                                } else if let url = Emails.url(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
                                     Button {
                                         UIApplication.shared.open(url)
                                     } label: {
@@ -107,7 +100,6 @@ struct ShoppingList: View {
                                 }
                                 .foregroundColor(.primary)
                             }
-                            .sharePopover(items: [Constants.appUrl], showsSharedAlert: true, isPresented: $showShareSheet)
                         }
                         ToolbarItem(placement: .primaryAction) {
                             Button("Copy") {
@@ -137,7 +129,6 @@ struct ShoppingList: View {
                 }
             }
         }
-        .navigationViewStyle(.stack)
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
         .environmentObject(vm)
     }

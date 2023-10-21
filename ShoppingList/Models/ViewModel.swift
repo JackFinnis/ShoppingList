@@ -25,24 +25,17 @@ class ViewModel: ObservableObject {
     
     // MARK: - Initialiser
     init() {
-        setupStorage()
+        setupiCloudStorage()
     }
     
-    func setupStorage() {
-        NotificationCenter.default.addObserver(self, selector: #selector(receivedNewKeyValue), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
+    func setupiCloudStorage() {
+        NotificationCenter.default.addObserver(self, selector: #selector(iCloudStorageDidChange), name: NSUbiquitousKeyValueStore.didChangeExternallyNotification, object: NSUbiquitousKeyValueStore.default)
         NSUbiquitousKeyValueStore.default.synchronize()
     }
     
     @objc
-    func receivedNewKeyValue(_ notification: Notification) {
-        DispatchQueue.main.async {
-            if let items = NSUbiquitousKeyValueStore.default.object(forKey: "items") as? [String] {
-                self.items = items
-            }
-            if let regulars = NSUbiquitousKeyValueStore.default.object(forKey: "regulars") as? [String] {
-                self.regulars = regulars
-            }
-        }
+    func iCloudStorageDidChange() {
+        objectWillChange.send()
     }
     
     // MARK: - Methods
