@@ -10,8 +10,8 @@ import SwiftUI
 struct MenuChevron: View {
     var body: some View {
         Image(systemName: "chevron.down.circle.fill")
-            .font(.system(size: 15).weight(.heavy))
-            .foregroundStyle(.secondary, Color(.tertiarySystemFill))
+            .font(.footnote).bold()
+            .foregroundStyle(.secondary, Color(.secondarySystemFill))
             .foregroundColor(.primary)
             .imageScale(.large)
     }

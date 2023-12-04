@@ -12,6 +12,7 @@ struct ShoppingListApp: App {
     var body: some Scene {
         WindowGroup {
             ShoppingList()
+                .fontDesign(.rounded)
         }
     }
 }
