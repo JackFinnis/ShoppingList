@@ -9,11 +9,15 @@ import SwiftUI
 
 struct ItemRow: View {
     @EnvironmentObject var vm: ViewModel
+    @State var bounce = false
     
     let item: String
     let suggested: Bool
     
     var body: some View {
+        let regular = vm.regulars.contains(item)
+        let removed = vm.recentlyRemovedItems.contains(item)
+        
         HStack(spacing: 0) {
             if suggested {
                 Button {
@@ -26,9 +30,9 @@ struct ItemRow: View {
                 Button {
                     vm.removeItem(item)
                 } label: {
-                    let removed = vm.recentlyRemovedItems.contains(item)
                     Image(systemName: removed ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(removed ? .accentColor : Color(.placeholderText))
+                        .contentTransition(.symbolEffect(.replace))
                         .font(.title2)
                 }
             }
@@ -36,11 +40,14 @@ struct ItemRow: View {
                 .padding(.leading, 15)
             Spacer()
             Button {
+                if !regular {
+                    bounce.toggle()
+                }
                 vm.toggleRegular(item)
             } label: {
-                let regular = vm.regulars.contains(item)
                 Image(systemName: regular ? "star.fill" : "star")
                     .foregroundColor(.yellow)
+                    .symbolEffect(.bounce, value: bounce)
             }
             .buttonStyle(.borderless)
         }

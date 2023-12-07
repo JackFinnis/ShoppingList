@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-extension View {
-    func horizontallyCentred() -> some View {
-        HStack(spacing: 0) {
-            Spacer(minLength: 0)
-            self
-            Spacer(minLength: 0)
-        }
-    }
-}
-
 struct ClearableField: View {
     let placeholder: String
     @Binding var text: String

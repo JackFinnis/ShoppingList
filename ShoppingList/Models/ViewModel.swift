@@ -87,7 +87,7 @@ class ViewModel: ObservableObject {
         guard !recentlyRemovedItems.contains(item) else { return }
         recentlyRemovedItems.append(item)
         Haptics.tap()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.items.removeAll(item)
         }
     }

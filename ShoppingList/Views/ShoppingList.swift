@@ -7,18 +7,18 @@
 
 import SwiftUI
 import MessageUI
+import StoreKit
 
 struct ShoppingList: View {
-    @StateObject var vm = ViewModel()
+    @Environment(\.requestReview) var requestReview
+    @EnvironmentObject var vm: ViewModel
     @FocusState var focused: Bool
     @State var showEmailSheet = false
     @State var showUndoAlert = false
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color(.systemGroupedBackground)
-                    .ignoresSafeArea()
+            GeometryReader { geo in
                 ScrollViewReader { list in
                     List {
                         Section {
@@ -53,7 +53,8 @@ struct ShoppingList: View {
                             .headerProminence(.increased)
                         }
                     }
-                    .frame(maxWidth: 500)
+                    .contentMargins(.vertical, 10, for: .scrollContent)
+                    .contentMargins(.horizontal, max(16, (geo.size.width - 500) / 2), for: .scrollContent)
                     .listStyle(.insetGrouped)
                     .animation(.default, value: vm.items)
                     .animation(.default, value: vm.regulars)
@@ -63,16 +64,15 @@ struct ShoppingList: View {
                             Button("Clear") {
                                 vm.emptyList()
                             }
-                            .horizontallyCentred()
                             .disabled(vm.items.isEmpty)
                         }
                         ToolbarItem(placement: .principal) {
                             Menu {
                                 ShareLink("Share \(Constants.name)", item: Constants.appURL)
                                 Button {
-                                    Store.requestRating()
+                                    requestReview()
                                 } label: {
-                                    Label("Rate the App", systemImage: "star")
+                                    Label("Rate \(Constants.name)", systemImage: "star")
                                 }
                                 Button {
                                     Store.writeReview()
@@ -130,7 +130,6 @@ struct ShoppingList: View {
             }
         }
         .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
-        .environmentObject(vm)
     }
 }
 
