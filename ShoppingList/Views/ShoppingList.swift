@@ -59,47 +59,39 @@ struct ShoppingList: View {
                     .animation(.default, value: vm.items)
                     .animation(.default, value: vm.regulars)
                     .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle(Constants.name)
+                    .toolbarTitleMenu {
+                        ShareLink("Share \(Constants.name)", item: Constants.appURL)
+                        Button {
+                            requestReview()
+                        } label: {
+                            Label("Rate \(Constants.name)", systemImage: "star")
+                        }
+                        Button {
+                            Store.writeReview()
+                        } label: {
+                            Label("Write a Review", systemImage: "quote.bubble")
+                        }
+                        if MFMailComposeViewController.canSendMail() {
+                            Button {
+                                showEmailSheet.toggle()
+                            } label: {
+                                Label("Send us Feedback", systemImage: "envelope")
+                            }
+                        } else if let url = Emails.url(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
+                            Button {
+                                UIApplication.shared.open(url)
+                            } label: {
+                                Label("Send us Feedback", systemImage: "envelope")
+                            }
+                        }
+                    }
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Clear") {
                                 vm.emptyList()
                             }
                             .disabled(vm.items.isEmpty)
-                        }
-                        ToolbarItem(placement: .principal) {
-                            Menu {
-                                ShareLink("Share \(Constants.name)", item: Constants.appURL)
-                                Button {
-                                    requestReview()
-                                } label: {
-                                    Label("Rate \(Constants.name)", systemImage: "star")
-                                }
-                                Button {
-                                    Store.writeReview()
-                                } label: {
-                                    Label("Write a Review", systemImage: "quote.bubble")
-                                }
-                                if MFMailComposeViewController.canSendMail() {
-                                    Button {
-                                        showEmailSheet.toggle()
-                                    } label: {
-                                        Label("Send us Feedback", systemImage: "envelope")
-                                    }
-                                } else if let url = Emails.url(subject: "\(Constants.name) Feedback"), UIApplication.shared.canOpenURL(url) {
-                                    Button {
-                                        UIApplication.shared.open(url)
-                                    } label: {
-                                        Label("Send us Feedback", systemImage: "envelope")
-                                    }
-                                }
-                            } label: {
-                                HStack {
-                                    Text(Constants.name)
-                                        .font(.headline)
-                                    MenuChevron()
-                                }
-                                .foregroundColor(.primary)
-                            }
                         }
                         ToolbarItem(placement: .primaryAction) {
                             Button("Copy") {

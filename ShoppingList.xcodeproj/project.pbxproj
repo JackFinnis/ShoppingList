@@ -18,7 +18,6 @@
 		0402C7072A197F3D00238C51 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7062A197F3D00238C51 /* Store.swift */; };
 		0402C7092A197F5500238C51 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7082A197F5500238C51 /* String.swift */; };
 		0402C70B2A197F7800238C51 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C70A2A197F7800238C51 /* EmailView.swift */; };
-		0402C70F2A197FE400238C51 /* MenuChevron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C70E2A197FE400238C51 /* MenuChevron.swift */; };
 		0402C7112A1980A300238C51 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7102A1980A300238C51 /* Collection.swift */; };
 		0402C7132A19840E00238C51 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7122A19840E00238C51 /* Array.swift */; };
 		0402C7172A198B3000238C51 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7162A198B3000238C51 /* ItemRow.swift */; };
@@ -39,7 +38,6 @@
 		0402C7062A197F3D00238C51 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		0402C7082A197F5500238C51 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0402C70A2A197F7800238C51 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
-		0402C70E2A197FE400238C51 /* MenuChevron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuChevron.swift; sourceTree = "<group>"; };
 		0402C7102A1980A300238C51 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		0402C7122A19840E00238C51 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		0402C7162A198B3000238C51 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 			isa = PBXGroup;
 			children = (
 				0402C70A2A197F7800238C51 /* EmailView.swift */,
-				0402C70E2A197FE400238C51 /* MenuChevron.swift */,
 				0402C7182A19903100238C51 /* ClearableField.swift */,
 			);
 			path = Extra;
@@ -219,7 +216,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0402C70F2A197FE400238C51 /* MenuChevron.swift in Sources */,
 				0402C7032A197F1900238C51 /* Haptics.swift in Sources */,
 				0402C7012A197F0D00238C51 /* Emails.swift in Sources */,
 				0402C7192A19903100238C51 /* ClearableField.swift in Sources */,
