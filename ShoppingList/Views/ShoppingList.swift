@@ -58,10 +58,10 @@ struct ShoppingList: View {
                     .listStyle(.insetGrouped)
                     .animation(.default, value: vm.items)
                     .animation(.default, value: vm.regulars)
-                    .navigationBarTitleDisplayMode(.inline)
                     .navigationTitle(Constants.name)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navigationDocument(Constants.appURL, preview: SharePreview(Constants.name, image: Image(.logo)))
                     .toolbarTitleMenu {
-                        ShareLink("Share \(Constants.name)", item: Constants.appURL)
                         Button {
                             requestReview()
                         } label: {
