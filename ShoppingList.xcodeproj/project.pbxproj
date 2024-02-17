@@ -22,6 +22,7 @@
 		0402C7172A198B3000238C51 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7162A198B3000238C51 /* ItemRow.swift */; };
 		0402C7192A19903100238C51 /* ClearableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7182A19903100238C51 /* ClearableField.swift */; };
 		0402C71B2A19924F00238C51 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C71A2A19924F00238C51 /* Int.swift */; };
+		045B92F72B80349B002ED01B /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045B92F62B80349B002ED01B /* UIFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		0402C7182A19903100238C51 /* ClearableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearableField.swift; sourceTree = "<group>"; };
 		0402C71A2A19924F00238C51 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		0445D53F2A7C639100B22EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		045B92F62B80349B002ED01B /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		04E46D082A241B4100B9E8CE /* ShoppingList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoppingList.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +114,7 @@
 				0402C7082A197F5500238C51 /* String.swift */,
 				0402C7102A1980A300238C51 /* Collection.swift */,
 				0402C71A2A19924F00238C51 /* Int.swift */,
+				045B92F62B80349B002ED01B /* UIFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				0402C7132A19840E00238C51 /* Array.swift in Sources */,
 				0402C6FF2A197EF200238C51 /* Constants.swift in Sources */,
 				0402C7072A197F3D00238C51 /* AppStore.swift in Sources */,
+				045B92F72B80349B002ED01B /* UIFont.swift in Sources */,
 				0402C6F62A197CCD00238C51 /* ShoppingList.swift in Sources */,
 				0402C7172A198B3000238C51 /* ItemRow.swift in Sources */,
 				0402C6FD2A197E0300238C51 /* Storage.swift in Sources */,

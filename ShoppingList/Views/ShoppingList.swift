@@ -17,9 +17,7 @@ struct ShoppingList: View {
     @State var showUndoAlert = false
     
     init() {
-        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .headline).withDesign(.rounded)!
-        let font = UIFont(descriptor: descriptor, size: descriptor.pointSize)
-        UINavigationBar.appearance().titleTextAttributes = [.font: font]
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.roundedSystemFont(style: .headline)]
     }
     
     var body: some View {
