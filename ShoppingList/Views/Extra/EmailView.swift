@@ -48,7 +48,7 @@ extension View {
 }
 
 struct EmailModifier: ViewModifier {
-    @EnvironmentObject var vm: ViewModel
+    @EnvironmentObject var storage: StorageVM
     @State var showEmailSent = false
     @State var showEmailNotSent = false
     

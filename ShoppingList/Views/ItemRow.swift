@@ -8,27 +8,27 @@
 import SwiftUI
 
 struct ItemRow: View {
-    @EnvironmentObject var vm: ViewModel
+    @EnvironmentObject var storage: StorageVM
     @State var bounce = false
     
     let item: String
     let suggested: Bool
     
     var body: some View {
-        let regular = vm.regulars.contains(item)
-        let removed = vm.recentlyRemovedItems.contains(item)
+        let regular = storage.regulars.contains(item)
+        let removed = storage.recentlyRemovedItems.contains(item)
         
         HStack(spacing: 0) {
             if suggested {
                 Button {
-                    vm.addItem(item)
+                    storage.addItem(item)
                 } label: {
                     Image(systemName: "plus.circle")
                         .font(.title2)
                 }
             } else {
                 Button {
-                    vm.removeItem(item)
+                    storage.removeItem(item)
                 } label: {
                     Image(systemName: removed ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(removed ? .accentColor : Color(.placeholderText))
@@ -43,7 +43,7 @@ struct ItemRow: View {
                 if !regular {
                     bounce.toggle()
                 }
-                vm.toggleRegular(item)
+                storage.toggleRegular(item)
             } label: {
                 Image(systemName: regular ? "star.fill" : "star")
                     .foregroundColor(.yellow)
@@ -59,6 +59,6 @@ struct ItemRow_Previews: PreviewProvider {
         List {
             ItemRow(item: "Milk", suggested: true)
         }
-        .environmentObject(ViewModel())
+        .environmentObject(StorageVM())
     }
 }

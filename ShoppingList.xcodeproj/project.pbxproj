@@ -10,12 +10,12 @@
 		0402C6E22A197C7800238C51 /* ShoppingListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6E12A197C7800238C51 /* ShoppingListApp.swift */; };
 		0402C6E62A197C7900238C51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0402C6E52A197C7900238C51 /* Assets.xcassets */; };
 		0402C6F62A197CCD00238C51 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6F52A197CCD00238C51 /* ShoppingList.swift */; };
-		0402C6FB2A197DE500238C51 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6FA2A197DE500238C51 /* ViewModel.swift */; };
+		0402C6FB2A197DE500238C51 /* StorageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6FA2A197DE500238C51 /* StorageVM.swift */; };
 		0402C6FD2A197E0300238C51 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6FC2A197E0300238C51 /* Storage.swift */; };
 		0402C6FF2A197EF200238C51 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C6FE2A197EF200238C51 /* Constants.swift */; };
 		0402C7012A197F0D00238C51 /* Emails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7002A197F0D00238C51 /* Emails.swift */; };
 		0402C7032A197F1900238C51 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7022A197F1900238C51 /* Haptics.swift */; };
-		0402C7072A197F3D00238C51 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7062A197F3D00238C51 /* Store.swift */; };
+		0402C7072A197F3D00238C51 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7062A197F3D00238C51 /* AppStore.swift */; };
 		0402C7092A197F5500238C51 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7082A197F5500238C51 /* String.swift */; };
 		0402C70B2A197F7800238C51 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C70A2A197F7800238C51 /* EmailView.swift */; };
 		0402C7112A1980A300238C51 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0402C7102A1980A300238C51 /* Collection.swift */; };
@@ -30,12 +30,12 @@
 		0402C6E12A197C7800238C51 /* ShoppingListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListApp.swift; sourceTree = "<group>"; };
 		0402C6E52A197C7900238C51 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0402C6F52A197CCD00238C51 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
-		0402C6FA2A197DE500238C51 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		0402C6FA2A197DE500238C51 /* StorageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageVM.swift; sourceTree = "<group>"; };
 		0402C6FC2A197E0300238C51 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		0402C6FE2A197EF200238C51 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0402C7002A197F0D00238C51 /* Emails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emails.swift; sourceTree = "<group>"; };
 		0402C7022A197F1900238C51 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
-		0402C7062A197F3D00238C51 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		0402C7062A197F3D00238C51 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		0402C7082A197F5500238C51 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		0402C70A2A197F7800238C51 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		0402C7102A1980A300238C51 /* Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 				0402C7002A197F0D00238C51 /* Emails.swift */,
 				0402C7022A197F1900238C51 /* Haptics.swift */,
 				0402C6FC2A197E0300238C51 /* Storage.swift */,
-				0402C7062A197F3D00238C51 /* Store.swift */,
+				0402C7062A197F3D00238C51 /* AppStore.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -133,7 +133,7 @@
 		0402C6F32A197CA700238C51 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0402C6FA2A197DE500238C51 /* ViewModel.swift */,
+				0402C6FA2A197DE500238C51 /* StorageVM.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,12 +224,12 @@
 				0402C7132A19840E00238C51 /* Array.swift in Sources */,
 				0402C70B2A197F7800238C51 /* EmailView.swift in Sources */,
 				0402C6FF2A197EF200238C51 /* Constants.swift in Sources */,
-				0402C7072A197F3D00238C51 /* Store.swift in Sources */,
+				0402C7072A197F3D00238C51 /* AppStore.swift in Sources */,
 				0402C6F62A197CCD00238C51 /* ShoppingList.swift in Sources */,
 				0402C7172A198B3000238C51 /* ItemRow.swift in Sources */,
 				0402C6FD2A197E0300238C51 /* Storage.swift in Sources */,
 				0402C71B2A19924F00238C51 /* Int.swift in Sources */,
-				0402C6FB2A197DE500238C51 /* ViewModel.swift in Sources */,
+				0402C6FB2A197DE500238C51 /* StorageVM.swift in Sources */,
 				0402C6E22A197C7800238C51 /* ShoppingListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

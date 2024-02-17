@@ -9,13 +9,12 @@ import SwiftUI
 
 @main
 struct ShoppingListApp: App {
-    @StateObject var vm = ViewModel()
+    @StateObject var storage = StorageVM()
     
     var body: some Scene {
         WindowGroup {
             ShoppingList()
-                .fontDesign(.rounded)
         }
-        .environmentObject(vm)
+        .environmentObject(storage)
     }
 }

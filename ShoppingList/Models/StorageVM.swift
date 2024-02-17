@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class ViewModel: ObservableObject {
+class StorageVM: ObservableObject {
     // MARK: - Properties
     @Published var newItem = ""
     @Published var recentlyRemovedItems = [String]()

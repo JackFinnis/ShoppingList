@@ -11,41 +11,48 @@ import StoreKit
 
 struct ShoppingList: View {
     @Environment(\.requestReview) var requestReview
-    @EnvironmentObject var vm: ViewModel
+    @EnvironmentObject var storage: StorageVM
     @FocusState var focused: Bool
     @State var showEmailSheet = false
     @State var showUndoAlert = false
     
+    init() {
+        let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .headline).withDesign(.rounded)!
+        let font = UIFont(descriptor: descriptor, size: descriptor.pointSize)
+        UINavigationBar.appearance().titleTextAttributes = [.font: font]
+    }
+    
     var body: some View {
-        NavigationStack {
-            GeometryReader { geo in
-                ScrollViewReader { list in
+        GeometryReader { geo in
+            ScrollViewReader { list in
+                NavigationStack {
                     List {
                         Section {
-                            ForEach(vm.items, id: \.self) { item in
+                            ForEach(storage.items, id: \.self) { item in
                                 ItemRow(item: item, suggested: false)
                             }
                             
-                            ClearableField(placeholder: "Add Item", text: $vm.newItem)
+                            ClearableField(placeholder: "Add Item", text: $storage.newItem)
                                 .id(0)
                                 .submitLabel(.done)
                                 .focused($focused)
                                 .onSubmit {
-                                    focused = vm.addNewItem()
+                                    focused = storage.addNewItem()
                                 }
                         }
                         
-                        if vm.suggestions.isNotEmpty {
+                        if storage.suggestions.isNotEmpty {
                             Section {
-                                ForEach(vm.suggestions, id: \.self) { item in
+                                ForEach(storage.suggestions, id: \.self) { item in
                                     ItemRow(item: item, suggested: true)
                                 }
                             } header: {
                                 HStack {
                                     Text("Favourites")
+                                        .font(.title3.weight(.semibold))
                                     Spacer()
                                     Button("Add All") {
-                                        vm.addAllSuggestions()
+                                        storage.addAllSuggestions()
                                     }
                                     .font(.body)
                                 }
@@ -56,8 +63,8 @@ struct ShoppingList: View {
                     .contentMargins(.vertical, 10, for: .scrollContent)
                     .contentMargins(.horizontal, max(16, (geo.size.width - 500) / 2), for: .scrollContent)
                     .listStyle(.insetGrouped)
-                    .animation(.default, value: vm.items)
-                    .animation(.default, value: vm.regulars)
+                    .animation(.default, value: storage.items)
+                    .animation(.default, value: storage.regulars)
                     .navigationTitle(Constants.name)
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationDocument(Constants.appURL, preview: SharePreview(Constants.name, image: Image(.logo)))
@@ -68,7 +75,7 @@ struct ShoppingList: View {
                             Label("Rate \(Constants.name)", systemImage: "star")
                         }
                         Button {
-                            Store.writeReview()
+                            AppStore.writeReview()
                         } label: {
                             Label("Write a Review", systemImage: "quote.bubble")
                         }
@@ -89,24 +96,24 @@ struct ShoppingList: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Clear") {
-                                vm.emptyList()
+                                storage.emptyList()
                             }
-                            .disabled(vm.items.isEmpty)
+                            .disabled(storage.items.isEmpty)
                         }
                         ToolbarItem(placement: .primaryAction) {
                             Button("Copy") {
-                                vm.copyList()
+                                storage.copyList()
                             }
-                            .disabled(vm.items.isEmpty)
+                            .disabled(storage.items.isEmpty)
                         }
                         ToolbarItem(placement: .bottomBar) {
                             Button("Undo") {
-                                vm.undoRemove()
+                                storage.undoRemove()
                             }
-                            .disabled(vm.recentlyRemovedItems.isEmpty)
+                            .disabled(storage.recentlyRemovedItems.isEmpty)
                         }
                         ToolbarItem(placement: .status) {
-                            Text(vm.items.count.formatted(singular: "item"))
+                            Text(storage.items.count.formatted(singular: "item"))
                                 .foregroundColor(.secondary)
                         }
                         ToolbarItem(placement: .bottomBar) {
@@ -119,14 +126,14 @@ struct ShoppingList: View {
                         }
                     }
                 }
+                .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
+                .fontDesign(.rounded)
             }
         }
-        .emailSheet(recipient: Constants.email, subject: "\(Constants.name) Feedback", isPresented: $showEmailSheet)
     }
 }
 
-struct ShoppingList_Previews: PreviewProvider {
-    static var previews: some View {
-        ShoppingList()
-    }
+#Preview {
+    ShoppingList()
+        .environmentObject(StorageVM())
 }
