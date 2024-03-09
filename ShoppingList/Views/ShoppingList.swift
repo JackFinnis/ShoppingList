@@ -30,13 +30,19 @@ struct ShoppingList: View {
                                 ItemRow(item: item, suggested: false)
                             }
                             
-                            ClearableField(placeholder: "Add Item", text: $storage.newItem)
-                                .id(0)
-                                .submitLabel(.done)
-                                .focused($focused)
-                                .onSubmit {
-                                    focused = storage.addNewItem()
-                                }
+                            HStack(spacing: 0) {
+                                Image(systemName: "circle")
+                                    .foregroundStyle(.fill)
+                                    .font(.title2)
+                                ClearableField(placeholder: "Add Item", text: $storage.newItem)
+                                    .padding(.leading, 15)
+                                    .id(0)
+                                    .submitLabel(.done)
+                                    .focused($focused)
+                                    .onSubmit {
+                                        focused = storage.addNewItem()
+                                    }
+                            }
                         }
                         
                         if storage.suggestions.isNotEmpty {
@@ -58,7 +64,7 @@ struct ShoppingList: View {
                             .headerProminence(.increased)
                         }
                     }
-                    .contentMargins(.vertical, 10, for: .scrollContent)
+                    .contentMargins(.vertical, 5, for: .scrollContent)
                     .contentMargins(.horizontal, max(16, (geo.size.width - 500) / 2), for: .scrollContent)
                     .listStyle(.insetGrouped)
                     .animation(.default, value: storage.items)
